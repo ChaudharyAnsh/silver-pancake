@@ -99,7 +99,6 @@ int main(int argc, char **argv)
                         if (root[atoi(cmd[2]) + i] == 0)
                         {
                             root[atoi(cmd[2]) + i] = root[i] - (atoi(cmd[2]));
-                            printf("%d\n", root[atoi(cmd[2]) + i]);
                         }
                         root[i] = -atoi(cmd[2]);
                         break;
@@ -139,7 +138,6 @@ int main(int argc, char **argv)
                     if (root[atoi(cmd[2]) + alloc] == 0)
                     {
                         root[atoi(cmd[2]) + alloc] = root[alloc] - (atoi(cmd[2]));
-                        printf("%d\n", root[atoi(cmd[2]) + alloc]);
                     }
                     root[alloc] = -atoi(cmd[2]);
                 }
@@ -172,7 +170,6 @@ int main(int argc, char **argv)
                     if (root[atoi(cmd[2]) + alloc] == 0)
                     {
                         root[atoi(cmd[2]) + alloc] = root[alloc] - (atoi(cmd[2]));
-                        printf("%d\n", root[atoi(cmd[2]) + alloc]);
                     }
                     root[alloc] = -atoi(cmd[2]);
                 }
