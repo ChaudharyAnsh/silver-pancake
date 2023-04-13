@@ -103,61 +103,49 @@ int main(int argc, char **argv)
                         root[i] = -atoi(cmd[2]);
                         break;
                     }
-                    else if (root[i] > 0)
-                        i = i + root[i];
-                    else
-                        i = i - root[i];
+                    i = i + abs(root[i]);
                 }
                 if (i == MAX)
-                    printf("Not free space available\n");
-            }
-
-            if (cmd[3][0] == 'B')
-            {
-                while (i != MAX)
-                {
-                    while (i < MAX)
-                    {
-                        if (root[i] > atoi(cmd[2]) && root[i] > sz)
-                        {
-                            sz = root[i];
-                            alloc = i;
-                        }
-                        else
-                            i = i + abs(root[i]);
-                    }
-                }
-                if (alloc == -1)
-                    printf("Not free space available\n");
-                else
-                {
-                    pc[atoi(cmd[1])].START = alloc;
-                    pc[atoi(cmd[1])].END = alloc + atoi(cmd[2]) - 1;
-                    pc[atoi(cmd[1])].MODE = 0;
-
-                    if (root[atoi(cmd[2]) + alloc] == 0)
-                    {
-                        root[atoi(cmd[2]) + alloc] = root[alloc] - (atoi(cmd[2]));
-                    }
-                    root[alloc] = -atoi(cmd[2]);
-                }
+                    printf("Not enough free space available\n");
             }
 
             if (cmd[3][0] == 'W')
             {
+                while (i != MAX)
+                {
+                    if (root[i] > atoi(cmd[2]) && root[i] > sz)
+                    {
+                        sz = root[i];
+                        alloc = i;
+                    }
+                    i = i + abs(root[i]);
+                }
+                if (alloc == -1)
+                    printf("Not enough free space available\n");
+                else
+                {
+                    pc[atoi(cmd[1])].START = alloc;
+                    pc[atoi(cmd[1])].END = alloc + atoi(cmd[2]) - 1;
+                    pc[atoi(cmd[1])].MODE = 0;
+
+                    if (root[atoi(cmd[2]) + alloc] == 0)
+                        root[atoi(cmd[2]) + alloc] = root[alloc] - (atoi(cmd[2]));
+
+                    root[alloc] = -atoi(cmd[2]);
+                }
+            }
+
+            if (cmd[3][0] == 'B')
+            {
                 sz = __INT32_MAX__;
                 while (i != MAX)
                 {
-                    while (i < MAX)
+                    if (root[i] > atoi(cmd[2]) && root[i] < sz)
                     {
-                        if (root[i] > atoi(cmd[2]) && root[i] < sz)
-                        {
-                            sz = root[i];
-                            alloc = i;
-                        }
-                        else
-                            i = i + abs(root[i]);
+                        sz = root[i];
+                        alloc = i;
                     }
+                    i = i + abs(root[i]);
                 }
                 if (alloc == -1)
                     printf("Not free space available\n");
@@ -168,9 +156,7 @@ int main(int argc, char **argv)
                     pc[atoi(cmd[1])].MODE = 0;
 
                     if (root[atoi(cmd[2]) + alloc] == 0)
-                    {
                         root[atoi(cmd[2]) + alloc] = root[alloc] - (atoi(cmd[2]));
-                    }
                     root[alloc] = -atoi(cmd[2]);
                 }
             }
@@ -202,8 +188,8 @@ int main(int argc, char **argv)
             {
                 if (pc[i].STATE == 1)
                 {
-                    printf("Process %d:\n\t", i);
-                    printf("%d - %d\n\n", pc[i].START, pc[i].END);
+                    printf("Process - %d:\t", i);
+                    printf("%d- %d\n", pc[i].START, pc[i].END);
                 }
             }
             int i = 0;
@@ -211,12 +197,10 @@ int main(int argc, char **argv)
             {
                 if (root[i] > 0)
                 {
-                    printf("Unallocated\n\t");
-                    printf("%d - %d\n\n", i, root[i] + i - 1);
-                    i = i + root[i];
+                    printf("Unallocated:\t");
+                    printf("%d - %d\n", i, root[i] + i - 1);
                 }
-                else
-                    i = i - root[i];
+                i = i + abs(root[i]);
             }
         }
 
@@ -236,7 +220,6 @@ int main(int argc, char **argv)
                         }
                     st += abs(root[i]);
                     i += abs(root[i]);
-                    root[st] = 0;
                 }
                 else
                     i += abs(root[i]);
